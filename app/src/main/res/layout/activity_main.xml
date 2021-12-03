@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="36dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="3"
+            android:background="@color/main_title_background"
+            android:gravity="center"
+            android:text="지하철 뭐 타지?"
+            android:textColor="@color/main_title_text"
+            android:textSize="12pt" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="6"
+            android:background="@drawable/border_box"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border_station"
+                android:gravity="center"
+                android:text="출발역"
+                android:textColor="@color/station_text"
+                android:textSize="25dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/StartLine"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="4"
+                    android:background="@drawable/border_spinner1"
+                    android:textAlignment="center" />
+
+                <Spinner
+                    android:id="@+id/StartStation"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="7"
+                    android:background="@drawable/border_spinner2"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="6"
+            android:background="@drawable/border_box"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border_station"
+                android:gravity="center"
+                android:text="도착역"
+                android:textColor="@color/station_text"
+                android:textSize="25dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/DestLine"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="4"
+                    android:background="@drawable/border_spinner1"
+                    android:textAlignment="center" />
+
+                <Spinner
+                    android:id="@+id/DestStation"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="7"
+                    android:background="@drawable/border_spinner2"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/resultButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="3"
+            android:backgroundTint="@color/button_background"
+            android:text="경로보기!"
+            android:textSize="20dp"
+            android:textColor="@color/button_text" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
