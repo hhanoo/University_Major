@@ -24,4 +24,4 @@
 
 구동 Demo 영상 링크
 ---
-  > http
+  > https://youtu.be/PX48unh1lgo
