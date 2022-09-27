@@ -51,7 +51,6 @@ function render(uOffset, uColor) {
 
     // leaf
     gl.uniform4f(uColor, 0.0, 1.0, 0.0, 1.0)
-
     gl.uniform4fv(uOffset, [0, 0, 0, 2])
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     gl.uniform4fv(uOffset, [0, 1, 0, 2])
@@ -62,8 +61,6 @@ function render(uOffset, uColor) {
     // pillar
     gl.uniform4f(uColor, 0.5, 0.25, 0.0, 1);
     gl.uniform4fv(uOffset, [-0.3, -1, 0, 2])
-
-    // Draw all
     gl.drawArrays(gl.TRIANGLE_FAN, 3, 4);
 }
 
