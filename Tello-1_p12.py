@@ -1,6 +1,7 @@
 from utils import *
 import time
 import cv2
+import pygame
 
 if __name__ == "__main__":
     myDrone = initTello()
@@ -16,6 +17,7 @@ if __name__ == "__main__":
         cv2.imshow("drone", img)
 
         keyboard = cv2.waitkey(1)
+        print(keyboard)
         if keyboard & 0xFF == ord('q'):
             myDrone.land()
             frame_read.stop()
