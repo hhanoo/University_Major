@@ -8,13 +8,11 @@ img_copy = img.copy()
 
 gray = np.float32(gray)
 dst = cv.cornerHarris(gray, 3, 3, 0.04)
-kernel = np.ones((2, 2), np.uint8)
-dst_maxima = cv.erode(dst, kernel)
 threshold = 0.05 * dst.max()
 
 for y in range(dst.shape[0]):
     for x in range(dst.shape[1]):
-        if dst_maxima[y, x] > threshold:
+        if dst[y, x] > threshold:
             cv.circle(img_copy, (x, y), 7, (0, 0, 255), 2)
 
 cv.imshow('201835526 Chung Hyunwoo', img_copy)
