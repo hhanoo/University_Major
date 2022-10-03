@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler, MaxAbsScaler, Ro
 from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
 from sklearn.cluster import KMeans, DBSCAN, MeanShift, estimate_bandwidth
 from sklearn.mixture import GaussianMixture
-from sklearn.metrics import silhouette_score, confusion_matrix
+from sklearn.metrics import silhouette_score
 from pyclustering.cluster.clarans import clarans
 from sklearn.decomposition import PCA
 import warnings
