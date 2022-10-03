@@ -22,8 +22,7 @@ def object_encoder(dataframe, encoder, target_feature):
     # For LabelEncoder
     if encoder == "LabelEncoder" or encoder == "LabelEncoder()":
         encoder = LabelEncoder()
-        for target_num, target in enumerate(target_feature):
-            dataframe[target] = encoder.fit_transform(dataframe[target])
+        dataframe = encoder.fit_transform(dataframe)
 
     # For Ordinal Encoder
     elif encoder == "OrdinalEncoder" or encoder == "OrdinalEncoder()":
