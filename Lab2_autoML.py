@@ -372,14 +372,14 @@ def auto_ml(input_dataset, model_lists, encoder_lists, scaling_lists, select_fea
             return None
 
     # Verify that encoder_list exists
-    contain_encoder_list = ['LabelEncoder', 'OrdinalEncoder']
+    contain_encoder_list = [None, 'LabelEncoder', 'OrdinalEncoder']
     for i in encoder_lists:
         if contain_encoder_list.__contains__(i) is False:
             print(i, "is invalid encoder.\n")
             return None
 
     # Verify that scaling_list exists
-    contain_scaling_list = ['StandardScaler', 'MinMaxScaler', 'MaxAbsScaler', 'RobustScaler', 'Normalizer']
+    contain_scaling_list = [None, 'StandardScaler', 'MinMaxScaler', 'MaxAbsScaler', 'RobustScaler', 'Normalizer']
     for i in scaling_lists:
         if contain_scaling_list.__contains__(i) is False:
             print(i, "is invalid scaler.\n")
