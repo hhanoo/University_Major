@@ -240,7 +240,6 @@ def model_clarans(dataset, real_result, clusters_list=None):
                 # Display medoid values separately
                 for num_med in med:
                     axes[x_row, y_col].scatter(x=tmp_dataset.iloc[num_med, 0], y=tmp_dataset.iloc[num_med, 1], c='Red',
-                                               s=1.5,
                                                marker='x')
 
     # Result plot return according to all parameters
@@ -318,9 +317,9 @@ def model_meanshift(dataset, real_result):
             x_row = number_sample
             y_col = number_quan
 
-            # Set the combination of parameters to the title of the subplotㄴ
+            # Set the combination of parameters to the title of the subplot
             axes[x_row, y_col].set_title("[quantile = " + str(quan) + ", n_samples = " + str(samples) + "]",
-                                         fontdict={'fontsize': 13})
+                                         fontdict={'fontsize': 10})
             axes[x_row, y_col].scatter(x=dataset.iloc[:, 0], y=dataset.iloc[:, 1], c=labels, s=1.5)
 
             # Calculation of possible score values. (purity, Silhouette)
@@ -352,7 +351,7 @@ def scores(dataset, labels, real_value, k):
         data = "Purity Score: " + str(purity) + " %\nEuclidian Silhouette Score: " + str(
             silhouette_eucl) + "\nManhattan Silhouette Score: " + str(
             silhouette_man) + "\nL1 Silhouette Score: " + str(l1) + "\nL2 Silhouette Score: " + str(l2)
-    # If the number of cluter is 1
+    # If the number of cluster is 1
     else:
         # Not compute silhouette
         data = "Purity Score: " + str(purity)+ " %"
@@ -387,12 +386,13 @@ def compute_purity(labels, true, k):
 
 # Preprocessing
 def preprocessing(dataset, encoder, scaling, encode_feature_list):
+    dataset_copy = dataset.copy()
     # If 'categorical feature' exists, scaling after encoder
     if encode_feature_list is not None:
-        dataset = object_encoder(dataset, encoder, encode_feature_list)
-    dataset = data_scaling(dataset, scaling)
+        dataset_copy = object_encoder(dataset_copy, encoder, encode_feature_list)
+    dataset_copy = data_scaling(dataset_copy, scaling)
 
-    return dataset
+    return dataset_copy
 
 
 # In[12]:
@@ -400,6 +400,7 @@ def preprocessing(dataset, encoder, scaling, encode_feature_list):
 
 def auto_ml(input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None):
     # copy dataset
+    global dataset_x_encode
     dataset = input_dataset.copy()
     dataset_x = dataset.drop(columns="median_house_value")
     dataset_y = pd.DataFrame(dataset.loc[:, "median_house_value"])
@@ -443,27 +444,27 @@ def auto_ml(input_dataset, model_lists, encoder_lists, scaling_lists, select_fea
         for scaling_type in scaling_lists:
             # preprocessing dataset using encoder and scaler
             if data_category is not None:
-                dataset_x = preprocessing(dataset_x, encoder_type, scaling_type, data_category)
-                if dataset_x is None:
+                dataset_x_encode = preprocessing(dataset_x, encoder_type, scaling_type, data_category).copy()
+                if dataset_x_encode is None:
                     print("Error")
                     return 0
             # fit clustering using each models and plotting about each model's parameters
             for model in model_lists:
                 print("Combination [" + str(count) + "]:", model, ",", encoder_type, ",", scaling_type)
                 if model == 'kmeans':
-                    graph = model_kmeans(dataset_x, dataset_y, k_lists)
+                    graph = model_kmeans(dataset_x_encode, dataset_y, k_lists)
                     graph.show()
                 elif model == 'em':
-                    graph = model_gaussian(dataset_x, dataset_y, k_lists)
+                    graph = model_gaussian(dataset_x_encode, dataset_y, k_lists)
                     graph.show()
                 elif model == 'clarans':
-                    graph = model_clarans(dataset_x, dataset_y, k_lists)
+                    graph = model_clarans(dataset_x_encode, dataset_y, k_lists)
                     graph.show()
                 elif model == 'dbscan':
-                    graph = model_dbscan(dataset_x, dataset_y)
+                    graph = model_dbscan(dataset_x_encode, dataset_y)
                     graph.show()
                 elif model == 'meanshift':
-                    graph = model_meanshift(dataset_x, dataset_y)
+                    graph = model_meanshift(dataset_x_encode, dataset_y)
                     graph.show()
                 count += 1
 
@@ -516,17 +517,23 @@ sns.heatmap(df.corr(), annot=True, fmt='0.2f')
 # In[18]:
 
 
+# Check the correlation of dataset between target and features after encoding
+plt.figure(figsize=(10, 6))
+tmp_encoding_df = object_encoder(df, 'LabelEncoder', ['ocean_proximity'])
+sns.heatmap(df.corr(), annot=True, fmt='0.2f')
+
+
+# In[ ]:
+
+
+# Feature type 1
+feature_list = ['total_rooms', 'total_bedrooms', 'population', 'households']
+
 # List setting
 model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
 encoder_list = ['LabelEncoder', 'OrdinalEncoder']
 scaling_list = ['StandardScaler', 'MinMaxScaler', 'MaxAbsScaler', 'RobustScaler', 'Normalizer']
 
-
-# In[19]:
-
-
-# Feature type 1
-feature_list = ['total_rooms', 'total_bedrooms', 'population', 'households']
 # 20,000 datasets are too large to take long to calculate (especially CLARANS)
 # So we will randomly extract only 10% of the total dataset and use it.
 random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
@@ -542,6 +549,12 @@ auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=enco
 
 # Feature type 2
 feature_list = ['total_rooms', 'total_bedrooms', 'population', 'households', "ocean_proximity"]
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'MaxAbsScaler', 'RobustScaler', 'Normalizer']
+
 # 20,000 datasets are too large to take long to calculate (especially CLARANS)
 # So we will randomly extract only 10% of the total dataset and use it.
 random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
@@ -557,6 +570,11 @@ auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=enco
 
 # Feature type 3
 feature_list = ['total_bedrooms', 'population', 'households', "ocean_proximity"]
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
 # 20,000 datasets are too large to take long to calculate (especially CLARANS)
 # So we will randomly extract only 10% of the total dataset and use it.
 random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
@@ -572,6 +590,12 @@ auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=enco
 
 # Feature type 4
 feature_list = ['total_bedrooms', 'population', 'households']
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
+
 # 20,000 datasets are too large to take long to calculate (especially CLARANS)
 # So we will randomly extract only 10% of the total dataset and use it.
 random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
@@ -587,6 +611,12 @@ auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=enco
 
 # Feature type 5
 feature_list = ['total_rooms', 'total_bedrooms', 'households']
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
+
 # 20,000 datasets are too large to take long to calculate (especially CLARANS)
 # So we will randomly extract only 10% of the total dataset and use it.
 random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
@@ -595,4 +625,94 @@ random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
 #   input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None
 auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=encoder_list, scaling_lists=scaling_list,
         select_feature_lists=feature_list)
+
+
+# In[19]:
+
+
+# Feature type 6
+feature_list = ['total_bedrooms', 'households']
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
+
+# 20,000 datasets are too large to take long to calculate (especially CLARANS)
+# So we will randomly extract only 10% of the total dataset and use it.
+random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
+
+# auto_ml parameters:
+#   input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None
+auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=encoder_list, scaling_lists=scaling_list,
+        select_feature_lists=feature_list)
+
+
+# In[ ]:
+
+
+# Feature type 7
+feature_list = ['total_rooms', 'median_income']
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
+
+# 20,000 datasets are too large to take long to calculate (especially CLARANS)
+# So we will randomly extract only 10% of the total dataset and use it.
+random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
+
+# auto_ml parameters:
+#   input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None
+auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=encoder_list, scaling_lists=scaling_list,
+        select_feature_lists=feature_list)
+
+
+# In[ ]:
+
+
+# Feature type 8
+feature_list = ['housing_median_age','total_rooms', 'median_income']
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
+
+# 20,000 datasets are too large to take long to calculate (especially CLARANS)
+# So we will randomly extract only 10% of the total dataset and use it.
+random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
+
+# auto_ml parameters:
+#   input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None
+auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=encoder_list, scaling_lists=scaling_list,
+        select_feature_lists=feature_list)
+
+
+# In[ ]:
+
+
+# Feature type 9
+feature_list = ['longitude','latitude']
+
+# List setting
+model_list = ['kmeans', 'em', 'clarans', 'dbscan', 'meanshift']
+encoder_list = ['LabelEncoder']
+scaling_list = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'Normalizer']
+
+# 20,000 datasets are too large to take long to calculate (especially CLARANS)
+# So we will randomly extract only 10% of the total dataset and use it.
+random_dataset = df.sample(n=int(df.shape[0] * 0.1), random_state=42)
+
+# auto_ml parameters:
+#   input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None
+auto_ml(input_dataset=random_dataset, model_lists=model_list, encoder_lists=encoder_list, scaling_lists=scaling_list,
+        select_feature_lists=feature_list)
+
+
+# In[ ]:
+
+
+
 
