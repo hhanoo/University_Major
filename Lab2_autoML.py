@@ -393,7 +393,7 @@ def auto_ml(input_dataset, model_lists, encoder_lists, scaling_lists, select_fea
                 print(i, "is invalid feature.\n")
                 return None
         dataset_x = pd.DataFrame(dataset_x.loc[:, select_feature_lists])
-        data_category = dataset_x.select_dtypes(include='object')
+    data_category = dataset_x.select_dtypes(include='object')
 
     # Set the count to know the progress because it outputs multiple combinations
     count = 1
