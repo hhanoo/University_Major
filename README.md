@@ -28,7 +28,7 @@
 ## Lab2_autoML
 
 <aside>
-💡 Python Library provides parameters for outputting clustering results through a combination of clustering models, encoders, and scalers for a dataset of selected features. As a result, plot, purity, and silhouette scores are output.
+Python Library provides parameters for outputting clustering results through a combination of clustering models, encoders, and scalers for a dataset of selected features. As a result, plot, purity, and silhouette scores are output.
 
 </aside>
 
@@ -84,7 +84,7 @@
 ## Lab2_autoML.auto_ml
 
 <aside>
-💡 class **auto_ml** (*input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None):*
+class **auto_ml** *(input_dataset, model_lists, encoder_lists, scaling_lists, select_feature_lists=None, k_lists=None):*
 
 </aside>
 
