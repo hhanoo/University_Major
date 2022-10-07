@@ -92,8 +92,6 @@
 
 The result of the combination of all parameters is shown through plot.
 
----
-
 **Parameters:**
 
 - **input_dataset: pd.DataFrame**
@@ -120,8 +118,6 @@ The result of the combination of all parameters is shown through plot.
     
     List of clustering counts (ex. [1,2,3] or [2,5,10])
     
-
----
 
 **Attribute:**
 
