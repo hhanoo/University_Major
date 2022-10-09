@@ -3,19 +3,19 @@
 ### Description of each files
 
 <details>
-<summary>week1_p99</summary>
+<summary>week1_Decision_Tree</summary>
 </details>
 
 <details>
-<summary>week2_SVM_p30</summary>
+<summary>week2_SVM</summary>
 </details>
 
 <details>
-<summary>week3_clustering_p27</summary>
+<summary>week3_clustering</summary>
 </details>
 
 <details>
-<summary>week3_clustering_p28</summary>
+<summary>week6_regularization</summary>
 </details>
 
 <details>
