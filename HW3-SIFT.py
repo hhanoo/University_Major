@@ -13,13 +13,10 @@ def feature_matching(obj, scene, i, j):
     keypoint1, descriptors1 = detector.detectAndCompute(obj, None)
     keypoint2, descriptors2 = detector.detectAndCompute(scene, None)
 
-    # img_res_detect1 = cv.drawKeypoints(obj, keypoint1, None)
-    # img_res_detect2 = cv.drawKeypoints(scene, keypoint2, None)
-
     matcher = cv.DescriptorMatcher_create(cv.DescriptorMatcher_FLANNBASED)
     knn_matches = matcher.knnMatch(descriptors1, descriptors2, 2)
 
-    ratio_thresh = [0.3, 0.5, 0.6]
+    ratio_thresh = [0.4, 0.5, 0.58]
     good_matches = []
     for m, n in knn_matches:
         if m.distance < ratio_thresh[i] * n.distance:
@@ -28,10 +25,6 @@ def feature_matching(obj, scene, i, j):
     cv.drawMatches(obj, keypoint1, scene, keypoint2, good_matches, img_matches,
                    flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
-    # cv.imshow('img1', obj)
-    # cv.imshow('img2', scene)
-    # cv.imshow('img_res_detect1', img_res_detect1)
-    # cv.imshow('img_res_detect2', img_res_detect2)
     title = "img_matches obj[" + str(i + 1) + "]-scene[" + str(j + 1) + "]"
     cv.imshow(title, img_matches)
     cv.waitKey(0)
@@ -55,7 +48,7 @@ if __name__ == '__main__':
     augmentObjectList = [
         contrast(obj1, 1.3, -70),
         contrast(obj2, 1.4, -93),
-        contrast(obj3, 1.5, -70)
+        contrast(obj3, 1.5, -93)
     ]
     sceneList = [scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8]
     augmentSceneList = [contrast(scene1, 1.6, -40), contrast(scene2, 1.6, -40), contrast(scene3, 1.5, -20),
