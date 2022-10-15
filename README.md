@@ -20,6 +20,67 @@
 
 <details>
 <summary>Lab1</summary>
+
+## Lab1
+<aside>
+It is a function that runs 4 models, scaling, encoder, and kfold at once, and outputs information about the highest value of each model and the top 10 information of the whole.
+</aside>
+
+**Parameters:**
+
+- **data: DataFrame**
+    
+  Allowed inputs is pandas dataframes.
+
+  Data of an independent variable
+
+- **model:** {‘DecisionTreeClassifier(), ‘LogisticREgression(), ‘SVC()}, default = None
+   
+  The type of models to test.
+  
+  If default=None, it is set to [DecisonTreeClassifier (crierion='enrotpy'), DecisonTreeClassifier (crierion='geni'), LogisticRegression(), and SVC()].
+
+- **scaler:** {‘DecisionTreeClassifier(), ‘LogisticREgression(), ‘SVC()}, default = None
+  
+  The type of scalers to test <br>
+
+  If default=None, it is set to [None, StandardScaler(), MinMaxScaler(), MaxAbsScaler(), RobustScaler(), Normalizer()].
+
+- **encoders:** {False, LabelEncoder(), OrdinalEncoder()}, default = None
+  
+  The type of encoder to test. Only select ‘False’, ‘LabelEncoder()’, ‘OrdinalEncoder()’ <br>
+  
+  If default=None, it is set to [‘False’, ‘LabelEncoder()’, ‘OrdinalEncoder()’]
+
+- **param:** dict, default = None
+
+  The type of parameter according to the model may be selected.<br>
+  It can be expressed in the form of a double dict.<br>
+  If default=None, it is set to such dictionary data<br>
+  <pre><code>
+  {'decision_tree_entropy': {'max_depth': [None, 2, 3, 4],
+                            'min_samples_split': [2, 3, 4]},
+   'decision_tree_gini': {'max_depth': [None, 2, 3, 4],
+                          'min_samples_split': [2, 3, 4]},
+   'logistic_regress': {'C': [0.01, 0.1, 1, 10]},
+   'support_vector': {'kernel': ['linear', 'rbf', 'poly', 'sigmoid'],
+                      'C': [0.01, 0.1, 1],
+                      'gamma': [0.001, 0.01, 0.1, 1, 10, 100]}
+  }
+  </code></pre>
+
+- **k:** int, default = None
+  Split dataset into k consecutive folds<br>
+  Number of folds. Must be at least 2.<br>
+  If default=None, it is set to [3, 5, 7, 10]
+
+**Returns:**
+
+- **best_score_models:** DataFrame
+  It returns the information of scaler, encoder, k, and param, which represent the highest accuracy in each model, and the accuracy score in the form of a DataFrame.
+
+- **top10_best:** DataFrame
+  Among the information according to all models, scaler, encoder, k, and param, the top 10 information with the highest acuity score is returned in DataFrame format.
 </details>
 
 <details>
