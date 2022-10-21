@@ -74,7 +74,7 @@ def rotation(gray, angle):
 
 if __name__ == '__main__':
     # open image
-    img_rgb = cv2.imread('image.png', cv2.IMREAD_COLOR)
+    img_rgb = cv2.imread('./Image_db/image.png', cv2.IMREAD_COLOR)
 
     # get dimension
     h, w, ch = img_rgb.shape

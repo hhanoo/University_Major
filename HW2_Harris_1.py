@@ -2,7 +2,7 @@
 import cv2 as cv
 import numpy as np
 
-img = cv.imread('house.jpeg')
+img = cv.imread('./Image_db/house.jpeg')
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 img_copy = img.copy()
 
