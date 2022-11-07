@@ -19,6 +19,16 @@
 </details>
 
 <details>
+<summary>week10_text_p103</summary>
+<br>
+
+**Calculate Similarity using Vector space model**
+
+For Query, the similarities of five documents were calculated and expressed in descending order.<br>
+To use vector space models, TfidfVectorizer() and linear_kernel() were used for cosine calculations.
+</details>
+
+<details>
 <summary>Lab1</summary>
 
 ## Lab1
