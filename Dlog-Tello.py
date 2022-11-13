@@ -4,6 +4,9 @@ import cvzone
 
 thres = 0.45
 nmsThres = 0.25
+rotate = 20
+up_down = 20
+for_back = 20
 
 classNames = []
 classFile = 'ss.names'  # Contains a totoal of 91 different objects which can be recognized by the code
@@ -26,7 +29,7 @@ me.streamoff()
 me.streamon()
 
 me.takeoff()
-me.move_up(40)
+# me.move_up(10)
 
 img = me.get_frame_read().frame
 img_h, img_w, img_c = img.shape
@@ -40,7 +43,7 @@ maximum_area = total_area * 0.30
 
 height, width, _ = img.shape
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-video = cv2.VideoWriter('video.avi', fourcc, 10, (width, height))
+video = cv2.VideoWriter('video.avi', fourcc, 25, (width, height))
 
 num = 0
 while True:
@@ -50,7 +53,6 @@ while True:
     try:
         for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):
             if classNames[classId - 1] == 'dog':
-                print('find')
                 x, y, w, h = box
                 center_x = x + w / 2
                 center_y = y + h / 2
@@ -59,35 +61,34 @@ while True:
                 cv2.putText(img, 'KKAKKUNG', (box[0] + 10, box[1] + 30), cv2.FONT_HERSHEY_COMPLEX_SMALL,
                             1, (0, 255, 0), 2)
 
-                if num == 0 and ((center_x < img_center_w - center_w) or (x == 0)):
-                    me.rotate_counter_clockwise(20)
+                lr, fb, ud, yv = 0, 0, 0, 0
+
+                if (center_x < img_center_w - center_w) or (x == 0):
+                    yv = -rotate
                     print('반시계')
-                elif num == 0 and ((center_x > img_center_w + center_w) or (x + w == img_w)):
-                    me.rotate_clockwise(20)
+                elif (center_x > img_center_w + center_w) or (x + w == img_w):
+                    yv = rotate
                     print('시계')
 
-                if num == 1 and ((center_y < img_center_h - center_h) or (y == 0)):
-                    me.move_up(20)
+                if (center_y < img_center_h - center_h) or (y == 0):
+                    ud = up_down
                     print('위로')
-                elif num == 1 and ((center_y > img_center_h + center_h) or (y + h == img_h)):
-                    me.move_down(10)
+                elif (center_y > img_center_h + center_h) or (y + h == img_h):
+                    ud = -up_down
                     print('아래로')
 
-                if num == 2 and ((w * h < minimum_area) and (x != 0)):
-                    me.move_forward(20)
+                if (w * h < minimum_area) and (x != 0):
+                    fb = for_back
                     print('전진')
-                elif num == 0 and (w * h > maximum_area):
-                    me.move_back(25)
+                elif w * h > maximum_area:
+                    fb = -for_back
                     print('후진')
 
-            # num에 따라 동작 종류를 선택
-            if num == 2:
-                num = 0
-            else:
-                num += 1
+                me.send_rc_control(lr, fb, ud, yv)
 
     except:
         pass
 
     video.write(img)
+    cv2.imshow("Image", img)
     cv2.waitKey(1)
