@@ -1,16 +1,14 @@
 # D-log
 
-
-## Introduction
-<br>
 Dron & Robotics Term Project
 
 Purpose: Freely shoot various images of dogs using drones
 
----
+
+<br>
 
 ## Difficulites & Implementation
-<br>
+
 
 ### 1. Movement
 
@@ -57,7 +55,8 @@ Purpose: Freely shoot various images of dogs using drones
 **Implementation**<br>
 → Find function ```send_rc_control(lr, fb, ud, yv)``` from [tello page](https://djitellopy.readthedocs.io/en/latest/tello/#djitellopy.tello.Tello.move_forward)
 
----
+
+<br>
 
 ## **Limitations & Improvements**
 
@@ -69,10 +68,11 @@ Purpose: Freely shoot various images of dogs using drones
 **Improvements**<br>
 → If the drone can change the direction of the camera, it can record from top to bottom. (ex. gimbal)
 
----
+
+<br>
 
 ## Demo video <br>
 
-> https://user-images.githubusercontent.com/71388566/201588751-abd3f7eb-941b-45f7-a3c6-26484ff6385d.mp4
+> https://user-images.githubusercontent.com/71388566/201589744-4a496cda-ae8d-479c-8b7f-5800c18736e2.mov
 
 
