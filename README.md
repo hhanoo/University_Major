@@ -39,10 +39,15 @@ Purpose: Freely shoot various images of dogs using drones
 
 **Before**<br>
 
+> https://user-images.githubusercontent.com/71388566/201588039-5fa83593-9e6f-4e01-813b-0e81cf316aa2.mov
+
 
 <br>
 
 **After**<br>
+
+> https://user-images.githubusercontent.com/71388566/201588551-ddaebe95-6991-49fe-ac34-fa0543d81db3.mp4
+
 
 <br>
 
@@ -50,7 +55,7 @@ Purpose: Freely shoot various images of dogs using drones
 → Recording is interrupted while the drone is performing a directional change or movement command.
 
 **Implementation**<br>
-→ Find function ‘send_rc_control(lr, fb, ud, yv)’ from [tello page](https://djitellopy.readthedocs.io/en/latest/tello/#djitellopy.tello.Tello.move_forward)
+→ Find function ```send_rc_control(lr, fb, ud, yv)``` from [tello page](https://djitellopy.readthedocs.io/en/latest/tello/#djitellopy.tello.Tello.move_forward)
 
 ---
 
@@ -66,4 +71,8 @@ Purpose: Freely shoot various images of dogs using drones
 
 ---
 
-## Demo video
+## Demo video <br>
+
+> https://user-images.githubusercontent.com/71388566/201588751-abd3f7eb-941b-45f7-a3c6-26484ff6385d.mp4
+
+
