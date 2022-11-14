@@ -5,7 +5,8 @@ thres = 0.55
 nmsThres = 0.4
 
 classNames = []
-classFile = 'ss.names'  # Contains a totoal of 91 different objects which can be recognized by the code
+# Contains a totoal of 91 different objects which can be recognized by the code
+classFile = 'ss.names'
 with open(classFile, 'rt') as f:
     classNames = f.read().split('\n')
 
@@ -51,19 +52,25 @@ while True:
                             1, (0, 255, 0), 2)
 
                 if num == 0 and ((center_x < img_center_w - center_w) or (x == 0)):
-                    cv2.putText(img, 'CCW', (10, 50), cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
+                    cv2.putText(img, 'CCW', (10, 50), cv2.FONT_ITALIC,
+                                2, (255, 0, 255), cv2.LINE_8, 2)
                 elif num == 0 and ((center_x > img_center_w + center_w) or (x + w == img_w)):
-                    cv2.putText(img, 'CW', (10, 50), cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
+                    cv2.putText(img, 'CW', (10, 50), cv2.FONT_ITALIC,
+                                2, (255, 0, 255), cv2.LINE_8, 2)
 
                 if num == 1 and ((center_y < img_center_h - center_h) or (y == 0)):
-                    cv2.putText(img, 'UP', (10, 50), cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
+                    cv2.putText(img, 'UP', (10, 50), cv2.FONT_ITALIC,
+                                2, (255, 0, 255), cv2.LINE_8, 2)
                 elif num == 1 and ((center_y > img_center_h + center_h) or (y + h == img_h)):
-                    cv2.putText(img, 'DOWN', (10, 50), cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
+                    cv2.putText(img, 'DOWN', (10, 50), cv2.FONT_ITALIC,
+                                2, (255, 0, 255), cv2.LINE_8, 2)
 
                 if num == 2 and ((w * h < minimum_area) and (x != 0)):
-                    cv2.putText(img, 'FORWARD', (10, 50), cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
+                    cv2.putText(img, 'FORWARD', (10, 50),
+                                cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
                 elif num == 0 and (w * h > maximum_area):
-                    cv2.putText(img, 'BACKWARD', (10, 50), cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
+                    cv2.putText(img, 'BACKWARD', (10, 50),
+                                cv2.FONT_ITALIC, 2, (255, 0, 255), cv2.LINE_8, 2)
 
     except:
         pass
