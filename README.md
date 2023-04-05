@@ -7,33 +7,6 @@
 - File 'TermProject_cluster4.ipynb' about cluster k = 4
 
 ---
-# 제목 없음
-
-**Contents**
-
-**1. End to End Process**
-
-1-1) Business objective
-
-1-2) Data exploration
-
-1-3) Data preprocessing
-
-1-4) Modeling (training of the learning models)
-
-**2.** **Learning Experience**
-
-2-1) Difficulties encountered and how we have solved them
-
-2-2) What you have learned doing the project
-
-2-3) Reason for failure
-
-**3. Open Source SW**
-
-3-1) Function definition (and description)
-
-3-2) Architecture
 
 # **End to End Process**
 
