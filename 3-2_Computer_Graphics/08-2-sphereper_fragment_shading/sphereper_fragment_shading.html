@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+
+<p>201835526 정현우</p>
+<button id = "Button0">Increase R</button>
+<button id = "Button1">Decrease R</button>
+<button id = "Button2">Increase phi</button>
+<button id = "Button3">Decrease phi</button>
+<p> </p>
+<button id = "Button4">Increase Subdivisions</button>
+<button id = "Button5">Decrease Subdivisions</button>
+<p> </p>
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute vec4 vNormal;
+varying vec4 fColor;
+
+uniform vec4 ambientProduct, diffuseProduct, specularProduct;
+uniform vec4 lightPosition;
+uniform float shininess;
+
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+
+void main() {
+    vec3 pos = (modelViewMatrix * vPosition).xyz;
+    vec3 L;
+
+    if(lightPosition.w == 0.0)
+        L = normalize( (modelViewMatrix * lightPosition).xyz);
+    else
+        L = normalize( (modelViewMatrix * lightPosition).xyz - pos);
+
+    vec3 E = -normalize( pos );
+    vec3 H = normalize( L + E );
+    vec3 N = normalize( (modelViewMatrix*vNormal).xyz );
+    vec4 ambient = ambientProduct;
+
+    float Kd = max( dot(L,N), 0.0 );
+    vec4 diffuse = Kd*diffuseProduct;
+
+    float Ks = pow( max(dot(N,H), 0.0), shininess );
+    vec4 specular = Ks*specularProduct;
+
+    if( dot(L,N) < 0.0 )
+        specular = vec4(0.0, 0.0, 0.0, 1.0);
+
+    gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+    fColor = ambient + diffuse + specular;
+    fColor.a = 1.0;
+
+}
+
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+varying vec4 fColor;
+
+void main() {
+    gl_FragColor = fColor;
+
+}
+
+</script>
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="sphereper_fragment_shading.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+    Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+</html>
